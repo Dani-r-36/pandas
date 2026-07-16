@@ -107,6 +107,7 @@ from pandas.core.dtypes.dtypes import (
     DatetimeTZDtype,
     ExtensionDtype,
     IntervalDtype,
+    NumpyEADtype
 )
 from pandas.core.dtypes.generic import (
     ABCIndex,
@@ -9660,7 +9661,7 @@ class DataFrame(NDFrame, OpsMixin):
             # pass dtype to avoid doing inference, which would break consistency
             #  with Index/Series ops
             dtype = None
-            if getattr(right, "dtype", None) == object:
+            if isinstance(dtype, NumpyEADtype):
                 # can't pass right.dtype unconditionally as that would break on e.g.
                 #  datetime64[h] ndarray
                 dtype = object
